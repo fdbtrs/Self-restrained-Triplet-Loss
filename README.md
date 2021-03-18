@@ -3,7 +3,7 @@
 
 Citation
 
-If you find this repository useful in your research, please consider to cite the following related papers:
+If you find this repository useful for your research, please consider to cite the following related paper:
 
 
 @article{boutros2021unmasking,
