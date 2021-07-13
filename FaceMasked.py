@@ -2,7 +2,8 @@ import random
 import cv2
 import dlib
 import numpy as np
-
+import os
+from mtcnn import MTCNN
 
 class FaceMasked:
     """
@@ -16,6 +17,7 @@ class FaceMasked:
         assert facePredictor is not None
         self.detector = dlib.get_frontal_face_detector()
         self.predictor = dlib.shape_predictor(facePredictor)
+        self.mtcnndetector = MTCNN()
 
     def getAllFaceBoundingBoxes(self, rgbImg):
         """
@@ -80,7 +82,9 @@ class FaceMasked:
         if boundingbox is None:
             boundingbox = self.getboundingbox(rgbImg, skipMulti)
             if boundingbox is None:
-                return
+                boundingbox=self.mtcnndetector.detect_faces(img)['box']
+                if (boundingbox is None):
+                 return
 
         if landmarks is None:
             landmarks = self.findLandmarks(rgbImg, boundingbox)
@@ -133,10 +137,22 @@ class FaceMasked:
 
 if __name__ == '__main__':
     dl = FaceMasked('shape_predictor_68_face_landmarks.dat')
-    img = cv2.imread("fadi/ID1540_d2_i1_30.jpg")
-    im = dl.simulateMask(np.array(img, dtype=np.uint8), mask_type="a", color=(255, 255, 255), draw_landmarks=False)
-    cv2.imshow("simulated", im)
-    cv2.waitKey()
+    list_images=os.listdir("loose_crop")
+    list_masked=os.listdir('loose_crop_mask')
+    ftx=open("ftxmtcnn.txt","w")
+    for i in list_images:
+      if not (i in list_masked):
+        img_name=os.path.join("loose_crop",i)
+        img = cv2.imread(img_name)
+        img = dl.simulateMask(np.array(img, dtype=np.uint8), mask_type="a", color=(0, 0, 0), draw_landmarks=False)
+        if not (img is None):
+         cv2.imwrite(os.path.join("loose_crop_mask_mtcnn",i),img)
+        else:
+            ftx.write(i + "\n")
+
+
+    #cv2.imshow("simulated", im)
+    #cv2.waitKey()
 
 
 
