@@ -3,7 +3,7 @@
 # This is the offical repository of the paper 'Unmasking Face Embeddings by Self-restrained Triplet Loss for Accurate Masked Face Recognition'
 
 
-![Workflow](https://raw.githubusercontent.com/fdbtrs/Self-restrained-Triplet-Loss/blob/master/images/workflow.png)
+![Workflow](https://raw.githubusercontent.com/fdbtrs/Self-restrained-Triplet-Loss/master/images/workflow.png)
 
 
 
