@@ -1,4 +1,4 @@
-# MFR
+# Self-restrained Triplet Loss
 
 # Evaluation of synthetically generated masked face of LFW
 

@@ -7,10 +7,18 @@
 
 
 
+### Model training
+- All pretrained models are available under https://github.com/fdbtrs/Self-restrained-Triplet-Loss/tree/master/weights
+- The SRT solution is trained on top of ResNet-100, ResNet-50 and MobileFaceNet.
+- To train a model, please use the main.py
+
+### Model evaluation
+-  Evaluation on IJB-C: please check evaluation instruction under evaluation folder
+-  Evaluation on LFW: please check evaluation instruction under evaluation folder
+
 Citation
 
-If you find this repository useful for your research, please consider to cite the following related paper:
-
+If you used any codes provided in this repository, please cite the following paper
 
 @article{boutros2021unmasking,
   title={Unmasking Face Embeddings by Self-restrained Triplet Loss for Accurate Masked Face Recognition},
