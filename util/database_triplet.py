@@ -51,7 +51,6 @@ class MaskDataset(torch.utils.data.Dataset):
         c = self.dirs[idx]
         cls = self.classes[idx]
         #Get positive pair
-        #unmask_embedding = np.load(os.path.join(self.data_dir, 'original', str(c), f))
         face_embedding = np.load(os.path.join(self.data_dir, 'original', str(c), f))
         mask_embedding = np.load(os.path.join(self.data_dir, 'fakemask', str(c), f))
         while(True):
@@ -59,18 +58,15 @@ class MaskDataset(torch.utils.data.Dataset):
              if((idx+radom_class)<len(self)):
               if (cls !=  self.classes[radom_class]):
                   radom_index=radom_class
-                  negative_embedding = np.load(os.path.join(self.data_dir, 'fakemask', str(self.dirs[radom_index]), self.files[radom_index]))
+                  negative_embedding = np.load(os.path.join(self.data_dir, 'original', str(self.dirs[radom_index]), self.files[radom_index])) # fakemask
                   break
         mask_embedding= mask_embedding.flatten()
         face_embedding=face_embedding.flatten()
         negative_embedding=negative_embedding.flatten()
-        #unmask_embedding=unmask_embedding.flatten()
 
         mask_embedding = torch.tensor(mask_embedding )
         face_embedding = torch.tensor(face_embedding )
         negative_embedding = torch.tensor(negative_embedding )
-        #unmask_embedding=torch.tensor(unmask_embedding)
-        #return (mask_embedding,face_embedding,negative_embedding,unmask_embedding,self.label,f)
 
         return (mask_embedding, face_embedding, negative_embedding, self.label, f)
 

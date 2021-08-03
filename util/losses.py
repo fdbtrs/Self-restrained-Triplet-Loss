@@ -140,23 +140,6 @@ class TripletLoss(nn.Module):
                              (positive_loss + self.margin - distance_negative))
             losses = F.relu(ls).mean()
             return (losses), (positive_loss.mean()), (distance_negative.mean()),distance_p_n.mean()
-
-        elif (self.distance == "SRT2" or self.distance=="SRT2D"):
-            self.margin = 2.0
-            positive = F.normalize(positive, p=2, dim=1)
-            anchor = F.normalize(anchor, p=2, dim=1)
-            negative = F.normalize(negative, p=2, dim=1)
-
-            positive_loss = self.dis(anchor, positive)
-            distance_negative = self.dis(anchor, negative)
-            distance_p_n = self.dis(positive, negative)
-
-            cond = distance_negative.mean() >= distance_p_n.mean()  # + 0.5*self.margin
-
-            ls = torch.where(cond, (positive_loss + self.margin - distance_p_n.mean()),
-                             (positive_loss + self.margin - distance_negative))
-            losses = F.relu(ls).mean()
-            return (losses), (positive_loss.mean()), (distance_negative.mean()), distance_p_n.mean()
         else:
             positive_loss = torch.abs(1.0- self.cosine(anchor,positive).mean())
             distance_negative =self.cosine(anchor,negative)

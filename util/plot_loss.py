@@ -24,7 +24,7 @@ font0 = FontProperties()
 font0.set_size(20)
 font0.set_weight("bold")
 
-with open('logs/Triplet.csv', 'r') as read_obj:
+with open('../logs/Triplet.csv', 'r') as read_obj:
     csv_reader = reader(read_obj)
     header = next(csv_reader)
     # Check file as empty
@@ -40,7 +40,7 @@ det_plot.plot(negative,linewidth=2,label="Triplet loss-d2")
 positive=[]
 negative=[]
 d3=[]
-with open('logs/SRT2D.csv', 'r') as read_obj:
+with open('../logs/SRT.csv', 'r') as read_obj:
     csv_reader = reader(read_obj)
     header = next(csv_reader)
     # Check file as empty

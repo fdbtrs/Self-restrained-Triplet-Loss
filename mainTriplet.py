@@ -225,6 +225,8 @@ def testing(args):
          else:
             np.save(os.path.join(save_path, f), pred)
 
+
+
 def testlfw(args):
     cnn.load_state_dict(torch.load(os.path.join(args.weights,str(args.loss),'weights.pt')))
     cnn.eval()
@@ -257,53 +259,85 @@ def load_weight(weights):
 
 def parse_args():
   parser = argparse.ArgumentParser(description='Train face mask adaption')
-  parser.add_argument('--loss', default="Triplet", help='loss Triplet or SRT')
-  parser.add_argument('--mode', default=1, help='')
-  parser.add_argument('--weights', default='weights2cr100', help='')
+  parser.add_argument('--loss', default="SRT", help='loss Triplet or SRT')
+  parser.add_argument('--mode', default=2, help='')
+  parser.add_argument('--weights', default='weights/weightsResNet100', help='')
   parser.add_argument('--epoch', default=10, help='')
-  parser.add_argument('--data_dir', default="/home/fboutros/PR/masked_training_embedding/ms1m_features_dlib_r100/", help='training dataset directory')
+  parser.add_argument('--data_dir', default="ms1m_features_dlib_r100/", help='training dataset directory')
 
-  parser.add_argument('--test_dir', default='/home/fboutros/PR/extracted_features/maskfilm_dataset/ResNet100/M12P,/home/fboutros/PR/extracted_features/maskfilm_dataset/ResNet100/M12R', help='')
-  #parser.add_argument('--test_dir', default='/home/aboller/ArcFace/Data/extracted_features/maskfilm_dataset/Resnet50/M1R', help='')
+  parser.add_argument('--test_dir', default='maskfilm_dataset/ResNet100/M12P,maskfilm_dataset/ResNet100/M12R', help='')
 
-  #parser.add_argument('--test_dir', default='/home/aboller/ArcFace/Data/extracted_features/ar_dataset/protocol1/Resnet50/probe', help='')
 
-  parser.add_argument('--test_dir_ar',default="/home/aboller/ArcFace/Data/extracted_features/mfr2/Resnet50")
+  parser.add_argument('--test_dir_ar',default="extracted_features/mfr2/Resnet100")
   parser.add_argument('--do_test_ar',default=False)
   parser.add_argument('--test_lfw',default=False)
-  parser.add_argument('--test_dir_lfw',default="")
+  parser.add_argument('--test_dir_lfw',default="extracted_features/lfw/face_embedding/Resnet100")
 
-  parser.add_argument('--lfw_test_output', default='outputlwf-Resnet50/', help='')
+  parser.add_argument('--lfw_test_output', default='outputlwf-Resnet100/', help='')
 
-  parser.add_argument('--test_output', default='output2cr/', help='')
-  parser.add_argument('--diff', default=False, help='')
+  parser.add_argument('--test_output', default='outputResNet100/', help='')
 
   args = parser.parse_args()
   return args
+
+def parse_args_ResNet50():
+  parser = argparse.ArgumentParser(description='Train face mask adaption')
+  parser.add_argument('--loss', default="SRT", help='loss Triplet or SRT')
+  parser.add_argument('--mode', default=2, help='')
+  parser.add_argument('--weights', default='weights/weightsResNet50', help='')
+  parser.add_argument('--epoch', default=10, help='')
+  parser.add_argument('--data_dir', default="ms1m_features_dlib_r50/", help='training dataset directory')
+
+  parser.add_argument('--test_dir', default='maskfilm_dataset/ResNet50/M12P,maskfilm_dataset/ResNet50/M12R', help='')
+
+
+  parser.add_argument('--test_dir_ar',default="extracted_features/mfr2/Resnet50")
+  parser.add_argument('--do_test_ar',default=False)
+  parser.add_argument('--test_lfw',default=False)
+  parser.add_argument('--test_dir_lfw',default="extracted_features/lfw/face_embedding/Resnet50")
+
+  parser.add_argument('--lfw_test_output', default='outputlwf-Resnet50/', help='')
+
+  parser.add_argument('--test_output', default='outputResNet50/', help='')
+
+  args = parser.parse_args()
+  return args
+
+def parse_args_MobilefaceNet():
+  parser = argparse.ArgumentParser(description='Train face mask adaption')
+  parser.add_argument('--loss', default="SRT", help='loss Triplet or SRT')
+  parser.add_argument('--mode', default=2, help='')
+  parser.add_argument('--weights', default='weights/weightsResNet50', help='')
+  parser.add_argument('--epoch', default=10, help='')
+  parser.add_argument('--data_dir', default="ms1m_features_dlib_MobilefaceNet/", help='training dataset directory')
+
+  parser.add_argument('--test_dir', default='maskfilm_dataset/MobilefaceNet/M12P,maskfilm_dataset/MobilefaceNet/M12R', help='')
+
+
+  parser.add_argument('--test_dir_ar',default="extracted_features/mfr2/MobilefaceNet")
+  parser.add_argument('--do_test_ar',default=False)
+  parser.add_argument('--test_lfw',default=False)
+  parser.add_argument('--test_dir_lfw',default="extracted_features/lfw/face_embedding/MobilefaceNet")
+
+  parser.add_argument('--lfw_test_output', default='outputlwf-MobilefaceNet/', help='')
+
+  parser.add_argument('--test_output', default='outputMobilefaceNet/', help='')
+
+  args = parser.parse_args()
+  return args
+
+
+
+
 if __name__ == '__main__':
     args=parse_args()
     if(args.mode==0):
         training(args)
-        #testing(args)
-        #args.do_test_ar=True
-        #testing(args)
     elif(args.mode==1):
-        #args.do_test_ar = True
         testing(args)
-    elif(args.mode==3):
-        frames = [0, 1, 2, 4, 8, 16, 32]
-        for f in frames:
-            test_dir=[]
-            args.loss = f
-            mask_colors = ['black', 'lightBlue']
-            for masktype in ['a', 'b', 'c', 'd', 'e', 'f']:
-                for color in mask_colors:
-                    test_dir.append("/home/aboller/ArcFace/Data/extracted_features/lfw/mask_"+color+"_"+masktype+"/Mobilefacenet")
-            args.test_dir_lfw=test_dir
-            testlfw(args)
-    else:
-        frames=[0,1,2,4,8,16,32]
-        for f in frames:
-            args.loss=f
-            testing(args)
+    elif  (args.mode==2):
+        testlfw(args)
+    elif (args.mode==3):
+        args.do_test_ar = True
+        testing(args)
 
