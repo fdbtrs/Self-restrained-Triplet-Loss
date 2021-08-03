@@ -18,7 +18,7 @@
 
 Citation
 
-If you used any codes provided in this repository, please cite the following paper
+If you used any of the codes provided in this repository, please cite the following paper
 
 @article{boutros2021unmasking,
   title={Unmasking Face Embeddings by Self-restrained Triplet Loss for Accurate Masked Face Recognition},
