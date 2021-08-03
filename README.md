@@ -13,8 +13,8 @@
 - To train a model, please use the main.py
 
 ### Model evaluation
--  Evaluation on IJB-C: please check evaluation instruction under [evaluation folder](https://github.com/fdbtrs/Self-restrained-Triplet-Loss/tree/master/evaluation/ijbc)
--  Evaluation on LFW: please check evaluation instruction under [evaluation folder](https://github.com/fdbtrs/Self-restrained-Triplet-Loss/tree/master/evaluation/lfw)
+-  Evaluation on IJB-C: please check evaluation instructions under [evaluation folder](https://github.com/fdbtrs/Self-restrained-Triplet-Loss/tree/master/evaluation/ijbc)
+-  Evaluation on LFW: please check evaluation instructions under [evaluation folder](https://github.com/fdbtrs/Self-restrained-Triplet-Loss/tree/master/evaluation/lfw)
 
 Citation
 
